@@ -9,6 +9,7 @@ class MyEditorScript
     static void PerformBuild()
     {
         BuildPipeline.BuildPlayer(FindEnabledEditorScenes(), @"D:\\GomokuVersion\\Gomoku.exe", BuildTarget.StandaloneWindows, BuildOptions.None);
+        BuildPipeline.BuildPlayer(FindEnabledEditorScenes(), @"D:\\GomokuWeb", BuildTarget.WebGL, BuildOptions.None);
     }
     private static string[] FindEnabledEditorScenes()
     {

@@ -2534,8 +2534,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   EnterSoundKeyServer: 0
   EnterSoundKey: LoginEnterSound
-  ClickSoundKeyServer: 1
-  ClickSoundKey: StartButtonClick
+  ClickSoundKeyServer: 0
+  ClickSoundKey: 
   ExitSoundKeyServer: 0
   ExitSoundKey: 
 --- !u!1 &1207744375

@@ -80,6 +80,15 @@ public class UIManager : Singleton<UIManager>
         return false;
     }
 
+    public void TryDestroy<T>() where T : BaseUI
+    {
+        string key = typeof(T).Name;
+        if (uiList.TryGetValue(key, out BaseUI ui))
+        {
+            Destroy(ui.gameObject);
+        }
+    }
+
     private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
         ClearList();

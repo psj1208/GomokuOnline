@@ -80,10 +80,8 @@ public class PSJMainPanel : MonoBehaviourPunCallbacks
             if (i == num)
             {
                 Panels[i].SetActive(boolValue);
-                if (UIManager.Instance.TryGet<TitleImageUI>(out TitleImageUI ui))
-                {
-                    Destroy(ui.gameObject);
-                }
+                UIManager.Instance.TryDestroy<TitleImageUI>();
+                UIManager.Instance.TryDestroy<LoadingUI>();
 
                 if (i == 0)
                 {
@@ -101,6 +99,12 @@ public class PSJMainPanel : MonoBehaviourPunCallbacks
 
     void OnLoginButtonClicked()
     {
+        TurnOffAllUI();
+        UIManager.Instance.TryDestroy<TitleImageUI>();
+        UIManager.Instance.show<LoadingUI>((ui) =>
+        {
+            ui.Init("Connecting");
+        });
         string nickname = nicknameInput.text.Trim();
 
         if (string.IsNullOrEmpty(nickname))
@@ -171,6 +175,11 @@ public class PSJMainPanel : MonoBehaviourPunCallbacks
 
     private void OnCreateButtonClicked()
     {
+        TurnOffAllUI();
+        UIManager.Instance.show<LoadingUI>((ui) =>
+        {
+            ui.Init("Creating");
+        });
         if (!PhotonNetwork.IsConnectedAndReady)
         {
             Debug.LogWarning("아직 Photon 서버에 연결되지 않았습니다!");
@@ -184,7 +193,6 @@ public class PSJMainPanel : MonoBehaviourPunCallbacks
             IsOpen = true
         };
         PhotonNetwork.CreateRoom(PhotonNetwork.NickName, options);
-        ControlPanel(1, false);
     }
 
     public override void OnCreatedRoom()
@@ -204,6 +212,10 @@ public class PSJMainPanel : MonoBehaviourPunCallbacks
         if (selectedRoomButton != null)
         {
             TurnOffAllUI();
+            UIManager.Instance.show<LoadingUI>((ui) =>
+            {
+                ui.Init("Joining");
+            });
             PhotonNetwork.JoinRoom(selectedRoomName);
         }
     }
